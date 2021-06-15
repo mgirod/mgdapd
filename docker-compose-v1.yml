@@ -1,0 +1,20 @@
+# This docker-compose file will assume that encryption/decryption key is available in the present working directory.
+# Run ./prepare-env.sh script to create key.
+version: "3.9"
+services:
+  app-receiver:
+    # SOME
+    # PARAMETERS
+    # ARE MISSING
+    image: app-receiver:latest
+    # SOME
+    # PARAMETERS
+    # ARE MISSING
+  app-sender:
+    # SOME
+    # PARAMETERS
+    # ARE MISSING
+    image: app-sender:latest
+    # SOME
+    # PARAMETERS
+    # ARE MISSING
