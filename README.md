@@ -1,7 +1,7 @@
 **IMPORTANT:**  
 - **Please fork this repository first.**  
 - **Work on the solution in the forked repository and provide us the link to it once done.**
-- **Do NOT create pull requests to this original repository. Creating pull requests will automatically disqualify you from proceeding further.**
+- **Do NOT create pull requests to the original repository. Creating pull requests will automatically disqualify you from proceeding further.**
 
 # devops-assignment-python-and-docker
 
