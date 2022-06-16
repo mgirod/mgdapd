@@ -13,7 +13,7 @@ def health_check():
     Considered as a health check endpoint for the application.
     :return: A tuple with json data and status_code
     """
-    data = {"msg": "Server is up", "status_code": 200}
+    data = {"msg": "Server is healthy", "status_code": 200}
     return jsonify(data), 200
 
 
@@ -34,7 +34,6 @@ def upload_file(filename):
     :return: A tuple with json data and status_code
     """
     save_location = "{0}/{1}.xml".format(settings.OUTPUT_DIR, filename)
-    # YOUR CODE
-    # SHOULD
-    # GO
-    # HERE
+    with open(save_location, "r") as filedata:
+        data = {'msg': filedata.read(), 'status_code': 201}
+        return jsonify(data), 201
