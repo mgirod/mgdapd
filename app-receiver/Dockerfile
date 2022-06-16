@@ -8,9 +8,10 @@ ENV DECRYPTION_KEY="/run/secrets/decryption_key"
 
 EXPOSE 8080
 
-# SOME
-# DOCKERFILE DIRECTIVES
-# ARE MISSING
+COPY receiver/gunicorn.conf.py ./
+COPY receiver/server.py ./
+RUN mkdir ./service
+COPY receiver/service ./service/
 
 COPY Pipfile ./
 COPY Pipfile.lock ./
