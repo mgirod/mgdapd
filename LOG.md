@@ -5,7 +5,7 @@
 
 I had to update Python: ubuntu 18:04 is using Python 3.6
 But I found that switching to it breaks ubuntu (gnome-terminal, apt-get...)
-Note: my bash prompt in PS1='\W> '
+Note: my bash prompt is PS1='\W> '
 
     ~> mkdir venv
     ~> cd venv
