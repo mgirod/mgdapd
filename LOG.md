@@ -1,7 +1,6 @@
 # Assignment log
 
-0.
-## Pre-requisites
+## 0. Pre-requisites
 
 I had to update Python: ubuntu 18:04 is using Python 3.6
 But I found that switching to it breaks ubuntu (gnome-terminal, apt-get...)
@@ -38,7 +37,7 @@ Soon I noticed I needed cryptography, setuptools_rust, Rust.
 I needed to upgrade pip, to reinstall cryptography...
 
 
-1.
+## 1.
     (p37) venv> cd ~/git/devops_assignment-python_and_docker
     (p37) devops_assignment-python_and_docker> ./prepare-env.sh 
     (p37) cd app-receiver
@@ -75,7 +74,7 @@ to the change for task 2. Here is the whole git log:
     c6f1f58 Update Readme.md
     aed8e0b Initial Commit
 
-2.
+## 2.
 In the second case (also an assertion), this is a 'real' failure: 500,
 server error when attempting to upload a test file.
 
@@ -128,16 +127,16 @@ For now, I can cheat by adding this directory tree locally...
 
     ============================================================================================= 2 passed in 0.01s =============================================================================================
 
-3.
+## 3.
 There were several possible ways to complete the Dockerfile, but the
 next task drove to preserve the hiearchy into the container, and use
 WORKDIR to access gunicorn.conf.
 
-4.
+## 4.
 The easiest was to generate the xml test file and to copy the tests in the container.
 I did not clean them up, so that they got carried uo to the production image...
 
-5.
+## 5.
     (p37) devops_assignment-python_and_docker> pip install json2xml
     (p37) devops_assignment-python_and_docker> sudo mkdir -p /usr/src/app-sender/input
     (p37) devops_assignment-python_and_docker> sudo mkdir -p /usr/src/app-sender/status-db
@@ -155,7 +154,7 @@ run_scan is invoked from:
 
 So, it should not return before it has processed the three steps.
 
-6.
+## 6.
     (p37) devops_assignment-python_and_docker> docker build -t app-sender:latest app-sender/
     (p37) devops_assignment-python_and_docker> docker run -v ${PWD}/input:/usr/src/app-sender/input sender:test
     Unable to find image 'sender:test' locally
@@ -178,7 +177,7 @@ I went for a CMD.
     CONTAINER ID   IMAGE                   COMMAND                   CREATED         STATUS                       PORTS     NAMES
     33bfd5085c01   sender:test             "python3 sender"          6 minutes ago   Exited (130) 5 minutes ago             elegant_swartz
 
-7.
+## 7.
 More missing pre-requisites...
 
     devops_assignment-python_and_docker> sudo apt-get update
