@@ -1,20 +1,36 @@
 # This docker-compose file will assume that encryption/decryption key is available in the present working directory.
 # Run ./prepare-env.sh script to create key.
-version: "3.9"
+version: "3.3"
 services:
   app-receiver:
-    # SOME
-    # PARAMETERS
-    # ARE MISSING
+    build: ./app-receiver
     image: app-receiver:latest
-    # SOME
-    # PARAMETERS
-    # ARE MISSING
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    volumes:
+      - type: volume
+        source: ./output
+        target: /usr/src/app-receiver/output
+      - type: bind
+        source: ./key
+        target: /run/secrets/decryption_key
   app-sender:
-    # SOME
-    # PARAMETERS
-    # ARE MISSING
+    build: ./app-sender
     image: app-sender:latest
-    # SOME
-    # PARAMETERS
-    # ARE MISSING
+    volumes:
+      - type: volume
+        source: ./input
+        target: /usr/src/app-sender/input
+      - type: volume
+        source: ./status-db
+        target: /usr/src/app-sender/status-db
+      - type: bind
+        source: ./key
+        target: /run/secrets/encryption_key
+volumes:
+  output: {}
+  input: {}
+  status-db: {}
+  key: {}
