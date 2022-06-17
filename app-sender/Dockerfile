@@ -19,6 +19,4 @@ RUN mkdir -p /usr/src/app-sender/status-db \
 RUN pip install --no-cache-dir pipenv
 RUN pipenv install  --system --deploy --ignore-pipfile
 
-# AN IMPORTANT
-# DOCKERFILE DIRECTIVE
-# COULD BE MISSING
+CMD ["python3", "sender"]
