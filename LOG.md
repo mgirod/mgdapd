@@ -272,3 +272,29 @@ But this doesn't solve the issue at hand (connection error):
     ...
     app-sender_1    | [2022-06-21 06:45:51,399] - [ERROR] - [utils.py] - Unable to upload file. msg: HTTPConnectionPool(host='127.0.0.1', port=8080): Max retries exceeded with url: /upload/books (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fbbd61bfeb0>: Failed to establish a new connection: [Errno 111] Connection refused'))
     ...
+
+Identities:
+
+    (p37) devops_assignment-python_and_docker> docker ps | grep app- | head -2
+    e3507371cdd6   app-receiver:latest                  "gunicorn server:app"    8 hours ago     Up 8 hours     0.0.0.0:8080->8080/tcp, :::8080->8080/tcp                                                                  devopsassignmentpythonanddocker_app-receiver_1
+    498a67f2c738   app-sender:latest                    "python3 sender"         8 hours ago     Up 8 hours                                                                                                                devopsassignmentpythonanddocker_app-sender_1
+
+On the receiver:
+
+    ~> docker exec -it e3507371cdd6 bash
+    root@e3507371cdd6:/usr/src/app-receiver# grep $(hostname) /etc/hosts
+    192.168.240.3	e3507371cdd6
+
+I checked that it is listening and the output is mounted as intended.
+On the sender:
+
+    ~> docker exec -it 498a67f2c738 bash
+    root@498a67f2c738:/usr/src/app-sender# curl -d "{@/usr/src/app-sender/input/books.xml}" -X POST http://127.0.0.1:8080/upload/books
+    curl: (7) Failed to connect to 127.0.0.1 port 8080: Connection refused
+    root@498a67f2c738:/usr/src/app-sender# curl -d "{@/usr/src/app-sender/input/books.xml}" -X POST http://192.168.240.3:8080/upload/books
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+    <title>400 Bad Request</title>
+    <h1>Bad Request</h1>
+    <p>The browser (or proxy) sent a request that this server could not understand.</p>
+
+Still not working, but the connection issue was only that the containers do not share the same address.
