@@ -260,3 +260,15 @@ that it ignores new input until after it gets restarted.
 
 I decide to send this result as such in case I fail to complete it
 now, feeling stuck for now.
+
+Reading the flask code, and reminding myself of decorators, found some
+help from the web:
+https://flask.palletsprojects.com/en/2.1.x/patterns/fileuploads/
+
+and implementing the decryption.
+But this doesn't solve the issue at hand (connection error):
+
+    (p37) devops_assignment-python_and_docker> docker-compose -f docker-compose-v1.yml logs app-sender
+    ...
+    app-sender_1    | [2022-06-21 06:45:51,399] - [ERROR] - [utils.py] - Unable to upload file. msg: HTTPConnectionPool(host='127.0.0.1', port=8080): Max retries exceeded with url: /upload/books (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fbbd61bfeb0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+    ...

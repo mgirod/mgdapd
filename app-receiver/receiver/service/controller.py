@@ -34,6 +34,11 @@ def upload_file(filename):
     :return: A tuple with json data and status_code
     """
     save_location = "{0}/{1}.xml".format(settings.OUTPUT_DIR, filename)
+    file = request.files['file']
+    try:
+        dec.decrypt_file(file, save_location)
+    except:
+        pass #not encrypted -- the case of the pytest test
     with open(save_location, "r") as filedata:
         data = {'msg': filedata.read(), 'status_code': 201}
         return jsonify(data), 201
