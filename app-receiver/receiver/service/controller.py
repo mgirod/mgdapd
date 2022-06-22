@@ -1,7 +1,14 @@
 from flask import Flask, request, jsonify
 from .decrypter import Decrypter
+import logging
+import re
 from . import settings
 
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(message)s',
+                    datefmt='%m-%d %H:%M',
+                    filename='/var/log/receiver.log',
+                    filemode='w')
 app = Flask("receiver")
 dec = Decrypter(settings.DECRYPTION_KEY)
 
@@ -34,11 +41,17 @@ def upload_file(filename):
     :return: A tuple with json data and status_code
     """
     save_location = "{0}/{1}.xml".format(settings.OUTPUT_DIR, filename)
-    file = request.files['file']
-    try:
-        dec.decrypt_file(file, save_location)
-    except:
-        pass #not encrypted -- the case of the pytest test
+    fs = request.files['file'] #FileStorage
+    fn = fs.filename
+    if re.search(r'\.enc$', fn):
+        tmpdst = "/tmp/{}".format(fn)
+        fs.save(tmpdst)
+        app.logger.debug("tmp dest: {}".format(tmpdst))
+        try:
+            dec.decrypt_file(tmpdst, save_location)
+            app.logger.debug("Successfully decrypted {}".format(fn))
+        except Exception as e:
+            app.logger.debug("Could not decrypt file {}: {}".format(tmpdst, e)) #not encrypted in the pytest test
     with open(save_location, "r") as filedata:
         data = {'msg': filedata.read(), 'status_code': 201}
         return jsonify(data), 201
