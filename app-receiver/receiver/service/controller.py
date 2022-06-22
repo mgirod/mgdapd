@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from .decrypter import Decrypter
 import logging
 import re
+from os import unlink
 from . import settings
 
 logging.basicConfig(level=logging.DEBUG,
@@ -52,6 +53,7 @@ def upload_file(filename):
             app.logger.debug("Successfully decrypted {}".format(fn))
         except Exception as e:
             app.logger.debug("Could not decrypt file {}: {}".format(tmpdst, e)) #not encrypted in the pytest test
+        unlink(tmpdst)
     with open(save_location, "r") as filedata:
         data = {'msg': filedata.read(), 'status_code': 201}
         return jsonify(data), 201
