@@ -25,6 +25,7 @@ class Decrypter:
         if os.path.isfile(self.__decryption_keypath):
             key = open(self.__decryption_keypath, "r")
             self.__decryption_key = str.encode(key.read().rstrip('\n'))
+            logging.info("Successfully read key {}".format(self.__decryption_key))
         else:
             logging.error("Decryption key is not available in {}.".format(self.__decryption_keypath))
             self.__decryption_key = Fernet.generate_key()
