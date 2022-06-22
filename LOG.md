@@ -298,3 +298,30 @@ On the sender:
     <p>The browser (or proxy) sent a request that this server could not understand.</p>
 
 Still not working, but the connection issue was only that the containers do not share the same address.
+
+Fixed the receiver address, now remains the error in upload_file...
+
+    (p37) devops_assignment-python_and_docker> docker-compose -f docker-compose-v1.yml logs app-sender
+    Attaching to devopsassignmentpythonanddocker_app-sender_1
+    app-sender_1    | [2022-06-22 07:11:46,312] - [INFO] - [statusHandler.py] - Status DB initialized to /usr/src/app-sender/status-db
+    (p37) devops_assignment-python_and_docker> docker-compose -f docker-compose-v1.yml logs app-receiver
+    Attaching to devopsassignmentpythonanddocker_app-receiver_1
+    ...
+    app-receiver_1  | ERROR:receiver:Exception on /upload/books [POST]
+    app-receiver_1  | Traceback (most recent call last):
+    app-receiver_1  |   File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 2447, in wsgi_app
+    app-receiver_1  |     response = self.full_dispatch_request()
+    app-receiver_1  |   File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    app-receiver_1  |     rv = self.handle_user_exception(e)
+    app-receiver_1  |   File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 1821, in handle_user_exception
+    app-receiver_1  |     reraise(exc_type, exc_value, tb)
+    app-receiver_1  |   File "/usr/local/lib/python3.10/site-packages/flask/_compat.py", line 39, in reraise
+    app-receiver_1  |     raise value
+    app-receiver_1  |   File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    app-receiver_1  |     rv = self.dispatch_request()
+    app-receiver_1  |   File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 1936, in dispatch_request
+    app-receiver_1  |     return self.view_functions[rule.endpoint](**req.view_args)
+    app-receiver_1  |   File "/receiver/service/controller.py", line 42, in upload_file
+    app-receiver_1  |     with open(save_location, "r") as filedata:
+    app-receiver_1  | FileNotFoundError: [Errno 2] No such file or directory: '/usr/src/app-receiver/output/books.xml'
+    ...
