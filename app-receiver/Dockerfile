@@ -8,13 +8,9 @@ ENV DECRYPTION_KEY="/run/secrets/decryption_key"
 
 EXPOSE 8080
 
-# COPY receiver/gunicorn.conf.py ./
-# COPY receiver/server.py ./
-# RUN mkdir ./service
-# COPY receiver/service ./service/
 RUN mkdir -p ./receiver/service
 COPY receiver ./receiver
-COPY receiver/service ./service/
+COPY receiver/service ./receiver/service/
 
 COPY Pipfile ./
 COPY Pipfile.lock ./
